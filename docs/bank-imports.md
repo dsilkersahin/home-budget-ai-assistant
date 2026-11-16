@@ -6,9 +6,9 @@ preview flags historical-month overlap; the dashboard's source filter should be
 used until those sources have been reconciled. Historical aggregates are excluded
 from partial-month date filters, with a warning.
 
-## N26
+## Supported CSV account statements
 
-Requires the 11 documented headers (order may vary), UTF-8 with optional BOM,
+The supported CSV layout requires 11 expected headers (order may vary), UTF-8 with optional BOM,
 quoted fields and a consistent column count. Booking date drives the reporting
 month; value date remains separate. `Amount (EUR)` retains its sign in
 `source_entries.signed_booked`. Transactions store a positive magnitude and an
@@ -18,7 +18,7 @@ never automatically income. Original amount/currency, rate, partner IBAN,
 payment reference, type and account remain available with the untouched raw row.
 No recurring payment is confirmed automatically.
 
-## Garanti card statements
+## Supported Excel card statements
 
 File format is detected from bytes: ZIP-based XLSX uses openpyxl; OLE-based XLS
 uses xlrd. A renamed XLSX with `.xls` extension is handled correctly. HTML/text
@@ -67,7 +67,7 @@ filename, sheet, source row and import batch are persisted in ignored SQLite.
 All financial reporting arithmetic runs in Python Decimal. Currencies remain
 separate; saved exchange rates never silently convert totals. Charts convert
 final numbers to floats only for display. Consumption excludes transfers,
-repayments and unresolved entries and subtracts refunds. N26 signed account
+repayments and unresolved entries and subtracts refunds. Signed account
 movements are shown independently. Credit-card purchases and repayments are not
 added together as consumption. Bank balances, household cash availability and
 import completeness are not inferred.

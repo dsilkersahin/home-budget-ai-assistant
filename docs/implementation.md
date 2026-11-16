@@ -7,8 +7,8 @@ scenarios, backtesting, and a bounded Ollama tool loop. Historical analysis is
 available immediately through the CLI/tools. Forecasts require explicit import
 coverage. The user-selected local model and limited validation are recorded below.
 
-A subsequent increment adds a local FastAPI web app with N26 CSV and
-Garanti XLS/XLSX import previews, explicit confirmation, source provenance,
+A subsequent increment adds a local FastAPI web app with supported CSV and
+Excel card statement import previews, explicit confirmation, source provenance,
 monthly/category/section dashboards, a SQL explorer, and local chat SQL tools.
 The broader roadmap still includes historical workbook mapping, saved-row
 editing, reviewed budget proposals, and backup/export workflows.
@@ -56,7 +56,7 @@ byproduct of having uploaded a file.
 
 Final web verification: 31 backend tests and the isolated Chromium browser flow
 pass. A real Qwen3.5-9B structured SQL plan returned the verified 57.25 EUR sum
-from the two synthetic N26 files. An initial native-tool attempt fabricated an
+from the two synthetic CSV files. An initial native-tool attempt fabricated an
 execution claim; this led to SQLChat's schema-constrained planning step and a
 regression test. A successful data tool must run before web chat returns an
 explanation. Financial prose can still misstate tool results, so evidence remains
