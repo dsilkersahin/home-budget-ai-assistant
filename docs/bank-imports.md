@@ -20,27 +20,13 @@ No recurring payment is confirmed automatically.
 
 ## Supported Excel card statements
 
-File format is detected from bytes: ZIP-based XLSX uses openpyxl; OLE-based XLS
-uses xlrd. A renamed XLSX with `.xls` extension is handled correctly. HTML/text
-masquerading as Excel, encrypted files, PDF and unsupported exports are rejected;
-they need a genuine XLS/XLSX export. No workbook macros or cell formulas execute.
-Formula-based transaction dates or amounts must be exported as values first.
+Upload genuine XLS or XLSX files using the supported card-statement layout.
+Encrypted files, PDFs, and unsupported layouts are rejected. Export formula-based
+dates and amounts as values before uploading.
 
-Each sheet is scanned for a TL/TRY or EUR card section, then its Date / Transaction /
-Tag / Bonus / Amount(...) header. Blank rows and repeated headers are supported.
-Card IDs stay separate from currency; different masked numbers are not merged.
-Known total/subtotal labels are not purchases. Dated rows without a valid section
-and header produce errors instead of being silently imported. Turkish decimal
-strings and DD/MM/YYYY dates are parsed explicitly. Numeric spreadsheet cells
-are converted once to their decimal text; exact source decimal formatting cannot
-be recovered from an Excel numeric cell's binary representation.
-
-Negative card entries suggest expenses. Positive Card Payment / Cep Şube Ödeme
-entries suggest repayments. Explicit refund/iade entries suggest refunds; other
-positive card entries remain unresolved. Negative settlement reversals remain
-unresolved. Review all suggestions. Bank tags and bonus are metadata, not
-additional purchases. There is no automatic mapping from a merchant to a
-subscription. Suggested categories remain editable.
+The importer reads transaction rows, skips totals, and suggests expenses,
+repayments, and refunds. Review classifications and categories before saving;
+ambiguous entries remain unresolved.
 
 ## Preview and persistence
 
