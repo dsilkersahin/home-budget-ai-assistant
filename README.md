@@ -2,7 +2,7 @@
 
 A local Python/SQLite household budgeting application with a browser upload
 dashboard, deterministic financial analysis, experimental guarded forecasts and
-bounded Ollama chat. Import multiple N26 CSV or Garanti card XLS/XLSX statements,
+bounded Ollama chat. Import multiple supported CSV or Excel card statements,
 review them, then explicitly save. Monthly historical ledger entries remain a
 separate source type. Data and model processing stay on your computer.
 
@@ -16,18 +16,18 @@ from the language toggle.
 
 **Statement import**
 
-![Statement upload area for N26 CSV and Garanti XLS/XLSX files](docs/ui/statement-import.png)
+![Statement upload area for CSV and Excel files](docs/ui/statement-import.png)
 
 **Local budget assistant**
 
 ![Budget assistant with suggested questions and a chat input](docs/ui/budget-assistant.png)
 
-- **Start with your statements:** drag in multiple N26 CSV or Garanti credit-card
-  XLS/XLSX files, then select **Analyze files** to review them before saving.
+- **Start with your statements:** drag in multiple supported CSV or Excel statement
+  files, then select **Analyze files** to review them before saving.
   Each batch supports up to 12 files, with a 15 MB limit per file.
 - **Explore your records:** switch between **Saved database** and **Upload preview**,
   then filter the dashboard by year, month, category, currency, source, or date range.
-- **See the totals:** summary cards show recorded consumption, signed N26 account
+- **See the totals:** summary cards show recorded consumption, signed account
   movement, card repayments, and the number of entries needing classification.
   Consumption is expenses less refunds, with card repayments excluded.
 - **Follow the trends:** **Month by month** compares recorded income and expenses
@@ -56,7 +56,7 @@ On a fresh installation, install `requirements-web.txt` into a virtual environme
 first. The web UI is buildless HTML/CSS/JavaScript served by FastAPI; Node is not
 required. The CLI still works without web dependencies.
 
-1. Choose or drop one or more N26 CSV / Garanti XLS / XLSX files.
+1. Choose or drop one or more supported CSV or Excel statement files.
 2. Analyze files to create a temporary upload preview. No transactions are saved.
 3. Review date, signed booked amount, kind, category, person, and one-off flags.
    Resolve possible overlaps by explicitly keeping or skipping each candidate.
@@ -69,7 +69,7 @@ required. The CLI still works without web dependencies.
 
 Currency, source, inclusive dates, merchant search, and grouping controls filter the
 report. Category, statement section, account/card and source charts use exact backend
-calculations. Monthly tables separate consumption, signed N26 account movements,
+calculations. Monthly tables separate consumption, signed account movements,
 card repayments, classified income and unresolved amounts. Transaction rows expose
 original-currency metadata, bank tags, bonus, source sheet/row and value date.
 
@@ -261,8 +261,8 @@ synthetic total (42.35 EUR) and period (2026-08-01 through 2026-10-31). Run
 `.venv/bin/python scripts/smoke-model.py` with the server running to repeat it.
 This is a narrow integration check, not a comprehensive language/agent evaluation;
 model prose may still misstate what incomplete coverage proves. Check tool evidence.
-The upload implementation adds tests for N26 BOM/quotes/empty values,
-positive unclassified entries, signed account movements, sectioned Garanti XLSX
+The upload implementation adds tests for CSV BOM/quotes/empty values,
+positive unclassified entries, signed account movements, sectioned Excel statements
 and genuine XLS, repeated headers, Turkish numbers, provenance, corrections,
 idempotence, overlap review, atomic preview/confirmation and SQL authorization.
 A Chromium browser smoke test covers multi-file upload, preview corrections,
@@ -301,26 +301,25 @@ An optional live SQL/model integration check is available as
 `.venv/bin/python scripts/smoke-sql-chat.py`. It uses the synthetic example CSVs
 in memory, asserts a 57.25 EUR SQL result, and never writes to the real database.
 
-## Real monthly workbook history
+## Import monthly workbook history
 
-The supplied `Berlin expense 2026.xlsx` has been imported into `budget.sqlite`.
-Start the dashboard with `.venv/bin/python -m budget web`, choose **Saved database**,
-**Year: 2026**, and **Source: historical** to see category totals and the monthly
-consumption line graph before uploading bank statements.
-
-To import this ledger into another database:
+Import an existing monthly Excel ledger into your local database:
 
 ```bash
-.venv/bin/python -m budget --db budget.sqlite import-history 'Berlin expense 2026.xlsx'
+.venv/bin/python -m budget --db budget.sqlite import-history /path/to/monthly-ledger.xlsx
 ```
 
-Identical workbook imports are skipped. Each literal amount in column B becomes
-one monthly record with workbook, sheet and row provenance; no daily booking date
-is invented. Formula totals and side calculations are excluded to avoid counting
-amounts twice. Negative expenses are refunds. Category assignments use label and
-section rules; unmatched entries remain uncategorized. April B30 is an unlabeled
-€30 expense. Missing months are absent records. November may be incomplete.
-February and December are absent from the supplied workbook. Worksheet names
-supply the month (November's heading incorrectly says October).
-Existing bank records remain present; filter by source when periods overlap.
-The pre-import database backup is `budget.sqlite.before-history.bak`.
+Choose **Saved database** and **Source: historical** in the dashboard to inspect
+imported monthly records. Use the year filter to select the relevant period.
+
+The importer expects the supported monthly ledger layout; arbitrary spreadsheets
+may need adaptation. Identical workbook imports are skipped. Each literal amount
+in column B becomes one monthly record with workbook, sheet and row provenance;
+no daily booking date is invented. Formula totals and side calculations are
+excluded to avoid counting amounts twice. Negative expenses are refunds.
+Category assignments use label and section rules; unmatched entries remain
+uncategorized. Worksheet names supply the month. Missing months are absent
+records, and an imported month does not establish complete coverage.
+
+Existing statement records remain present; filter by source when periods overlap.
+Personal workbooks and local databases are excluded from Git.
