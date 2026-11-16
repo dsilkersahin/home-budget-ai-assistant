@@ -70,6 +70,21 @@ historical spending analysis.
 
 ![Monthly spending dashboard](docs/ui/dashboard.png)
 
+The dashboard brings your financial activity into one view: summary cards show
+recorded spending, account movements, repayments, and entries needing review.
+The monthly chart compares income and expenses, while the category breakdown
+shows where spending is concentrated. Filters help you explore a specific period,
+currency, or source. Totals reflect the records imported so far.
+
 ![Statement import](docs/ui/statement-import.png)
 
+Drag and drop supported statements or choose files from your computer. Select
+**Analyze files** to preview transactions, review suggested categories, and
+resolve potential duplicates before confirming what to save.
+
 ![Local budget assistant](docs/ui/budget-assistant.png)
+
+Ask questions about your records or start with a suggested monthly summary,
+category breakdown, or review of unclassified entries. The assistant uses local
+tools to calculate answers and provides evidence you can inspect. It queries the
+selected saved database or upload preview and cannot save imports itself.
