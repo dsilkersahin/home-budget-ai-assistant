@@ -1,0 +1,30 @@
+__pycache__/
+*.pyc
+.venv/
+*.sqlite*
+# Local databases, SQL dumps, and backups at any directory depth
+*.db
+*.db-*
+*.db.*
+*.sql
+*.sql.*
+*.dump
+*.dump.*
+
+# Financial source files and transaction exports at any directory depth
+*.csv
+*.tsv
+*.xls
+*.xlsx
+*.xlsm
+*.ofx
+*.qfx
+*.qif
+*.parquet
+data/
+transactions/
+imports/
+exports/
+.env
+.local/
+.ipynb_checkpoints/
