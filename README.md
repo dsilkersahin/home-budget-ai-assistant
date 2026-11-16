@@ -1,8 +1,29 @@
 # Home Budget AI Assistant
 
-A local budgeting app to import statements, track monthly spending, explore
-categories, and ask questions about your records. Data stays on your computer,
-with a SQLite database and an optional local AI assistant powered by Ollama.
+A private financial workspace that turns everyday transaction records into a
+clearer picture of your household finances. Bring supported statements together,
+explore spending patterns, compare monthly income and expenses, and understand
+where your money goes through interactive charts and category breakdowns.
+
+An optional AI assistant lets you ask questions in natural language, with
+calculations performed by local tools and supporting records available to
+inspect. A read-only SQL workspace provides deeper exploration. English and
+Turkish interfaces make it easy to navigate your records.
+
+Built with Python, FastAPI, and SQLite, the app runs on your computer. Ollama
+powers the local AI experience, keeping financial records and model processing
+within your own environment.
+
+## System and hardware
+
+- **Core app:** Python 3.10+, a modern browser, and disk space for your local
+  database. The dashboard and SQL workspace do not require a GPU or AI model.
+- **Optional AI:** Ollama with the `qwen3.5:9b` model. Memory and disk needs depend
+  on model quantization and context length; GPU acceleration improves response time.
+- **Development setup:** Linux under WSL2, an AMD Ryzen 9 8945HS processor,
+  approximately 16 GB of memory available to WSL, and an NVIDIA RTX 4070 Laptop
+  GPU with 8 GB VRAM, as documented in the local model verification.
+  This is the development configuration, not a minimum hardware requirement.
 
 ## Start the app
 
@@ -30,6 +51,20 @@ workspace work without the model.
 
 Files must match a supported statement layout. See [import details](docs/bank-imports.md).
 Database files and transaction exports are excluded from Git.
+
+## What's next
+
+Planned directions for the project:
+
+- **Forecasting:** project spending and cash flow, explore seasonal patterns,
+  and compare what-if budget scenarios.
+- **Investment analysis:** explore portfolio allocation, performance, and risk
+  alongside household finances.
+- **Broader financial analysis:** examine savings goals, recurring commitments,
+  debt repayment scenarios, and longer-term financial trends.
+
+These are roadmap goals; the current app focuses on imported records and
+historical spending analysis.
 
 ## Screenshots
 
